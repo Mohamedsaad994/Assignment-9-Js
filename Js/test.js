@@ -1,5 +1,7 @@
 var sName = document.getElementById('sitename');
 var sUrl = document.getElementById('siteurl');
+var alrt = document.getElementById('alrt');
+var btnClose = document.getElementById('close');
 var siteDetails = [];
 
 
@@ -10,9 +12,14 @@ if(localStorage.getItem('sitedata') === null){
     display()
 }
 
+btnClose.addEventListener('click',function(){
+    alrt.classList.replace('d-flex','d-none');
+
+})
 
 function senData(){
     if(snameValidation() === true && surlValidation() === true){
+        test();
         var data = {
             siteName:sName.value,
             siteUrl:sUrl.value
@@ -22,8 +29,14 @@ function senData(){
         display();
         reset();
     }else{
-        window.alert('your data is not valid')
+        alrt.classList.replace('d-none','d-flex');
     }
+}
+
+function test(){
+    var Protocol = /^(https?:\/\/)/;
+    if (!Protocol.test(sUrl.value))
+    sUrl.value = "https://" + sUrl.value;
 }
 
 function reset(){
@@ -47,13 +60,11 @@ function display(){
         </button>
         </td>
         <td><button class="btn btn-danger" onclick="delte(${i})"><i class="fa-solid fa-trash"></i> Delete</button></td>
-        <td></td>
         </tr>
         `
     }
     document.getElementById('adding').innerHTML= dos;
 }
-
 function show(){
     console.log();
 }
